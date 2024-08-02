@@ -1,5 +1,5 @@
-<!--{% load static %}-->
-<!--{% load crm_tags %}-->
+<!-- {% load static %}
+{% load crm_tags %} -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,295 +8,435 @@
 
     <!-- Tailwindcss -->
     <link rel="stylesheet" href="../css/output.css">
+    <!-- <link rel="stylesheet" href="{% static 'crm/css/output.css' %}"> -->
+
     <!-- FontAwesome-->
     <script src="https://kit.fontawesome.com/f0336577ea.js" crossorigin="anonymous"></script>
     <title>CleanCRM</title>
-    <!-- Required chart.js -->
+     <!-- Required chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- alpinejs -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 <body>
 
-<header>
+    <header x-data="{ isOpen: true }" @click.outside="isOpen = true">
 
-    <div class="fixed flex  w-full bg-white shadow_header z-50 p-3 shadow-lg top-0 left-0">
-        <div class="px-2 py-1 ">
-            <i class="fa-solid fa-bars text-black text-2xl font-thin"></i>
-        </div>
-        <div class="px-2 py-1 ">
-            <ul class="flex gap-4 px-4">
-                <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
-                    Home
-                </li>
-                <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
-                    About us
-                </li>
-                <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
-                    Booking
-                </li>
-                <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
-                    Privacy Policy
-                </li>
-                <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
-                    Tearms and coinditions
-                </li>
-
-            </ul>
-        </div>
-    </div>
-
-    <div class="flex flex-col bg-cyan-600 text-white fixed h-screen py-4 px-2 pt-20 left-0 top-0">
-
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-        <div class="flex items-center">
-            <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
-                <i class="fa-solid fa-list text-2xl font-thin"></i>
-            </a>
-        </div>
-
-    </div>
-</header>
-
-<main class="p-20">
-    <div>
-        <h3 class="text-2xl">
-            Dashboard
-        </h3>
-    </div>
-
-    <div class="grid grid-cols-3 gap-4 my-4">
-
-        <div class="bg-white p-6">
-            <div>
-                <h5 class="text-lg font-medium text-center">
-                    Leads statistics
-                </h5>
-                <p class="text-sm font-semibold text-gray-500 text-center">July</p>
-            </div>
-            <div class="flex flex-col justify-center">
-                <div class="widget">
-                    <div id="chart" class="chart-container p-4"></div>
+        <div class="fixed flex items-center w-full bg-white shadow_header z-50 p-3 shadow-lg top-0 left-0">
+            <div x-on:click="isOpen = ! isOpen" class="px-2 py-1 ">
+                <div :class="{'menu-open' : !isOpen}" class="menu-icon">
+                    <span class="bar"></span>
                 </div>
-                <div>
-                    <ul class="flex flex-col">
-                        <li class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full bg-green-400"></div>
-                            <p>Approved</p>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full bg-blue-400"></div>
-                            <p>New</p>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full bg-red-400"></div>
-                            <p>Refused</p>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full bg-yellow-400"></div>
-                            <p>Need approved</p>
-                        </li>
-                    </ul>
+            </div>
+            <div>
+
+            </div>
+            <div class="flex justify-between items-center px-2 py-1 w-full">
+
+                <ul class="flex gap-4 px-4">
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        <a href="{% url 'crm' %}">Home</a>
+                    </li>
+                    <!-- <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        About us
+                    </li>
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        Booking
+                    </li>
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        Privacy Policy
+                    </li>
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        Tearms and coinditions
+                    </li> -->
+
+                </ul>
+
+                <div class="flex items-center gap-2">
+
+                    <div>
+                        <a href="{% url 'logout' %}" class="text-gray-500 transition-all font-medium hover:text-black">
+                            <!-- {{ request.user.username }} -->
+                            Operator Name
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <i class="fa-regular fa-bell dot-red"></i>
+                    </div>
+                    <div>
+                        <!-- <img class="w-8 h-8 border rounded-full" src="{% static 'crm/images/clientIcon.jpg' %}" alt=""> -->
+                        <img class="w-8 h-8 border rounded-full" src="../images/clientIcon.jpg" alt="">
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="bg-white p-6">
-            <div class="">
-                <h5 class="text-lg font-medium text-center">
-                    Profit per month
-                </h5>
-                <p class="text-sm font-semibold text-gray-500 text-center">July</p>
-            </div>
-            <div class="overflow-hidden">
 
-                <canvas class="p-10" id="chartLine"></canvas>
+        <div    :class="isOpen ? '' : 'w-36 sidebar_menu'"
+                class="flex flex-col bg-cyan-600 text-white fixed h-screen py-4
+                        px-2 pt-20 left-0 top-0 w-14 overflow-hidden shadow-cyan">
+
+            <div class="flex items-center">
+                <a :class="isOpen ? '' : 'w-full'" href="{% url 'crm' %}" class="flex gap-2 items-center p-2 hover:bg-cyan-700 focus:bg-cyan-800 w-10 h-10">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                    <h5 :class="{ 'hidden': isOpen }">Dashboard</h5>
+                </a>
             </div>
+            <div class="flex items-center">
+                <a :class="isOpen ? '' : 'w-full'" href="#" class=" flex gap-2 items-center p-2  hover:bg-cyan-700 focus:bg-cyan-800 w-10 h-10">
+                    <i class="fa-solid fa-headset text-2xl font-thin"></i>
+                    <h5 :class="{ 'hidden': isOpen }">Operators</h5>
+                </a>
+            </div>
+            <!-- <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="#" class="p-2  hover:bg-cyan-700 focus:bg-cyan-800">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                </a>
+            </div> -->
 
         </div>
-        <div class="bg-white">
-            <div>
+    </header>
+
+    <main class="p-20">
+        <div>
+            <h3 class="text-2xl">
+                Dashboard
+            </h3>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 my-4">
+
+            <div class="bg-white p-6">
                 <div>
-                    <div class="p-6">
-                        <div>
-                            <h5 class="text-lg font-medium text-center">
-                                Top 3 operators reyting
-                            </h5>
-                            <p class="text-sm font-semibold text-gray-500 text-center">July</p>
-                        </div>
-                        <div class="flex flex-col justify-center">
-                            <div class="widget">
-                                <div id="chart1" class="chart-container p-4"></div>
-                            </div>
+                    <h5 class="text-lg font-medium text-center">
+                        Leads statistics
+                    </h5>
+                    <p class="text-sm font-semibold text-gray-500 text-center">July</p>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="widget">
+                        <div id="chart" class="chart-container p-4"></div>
+                    </div>
+                    <div>
+                        <ul class="flex flex-col">
+                            <li class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-green-400"></div>
+                                <p>Approved</p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-blue-400"></div>
+                                <p>New</p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-red-400"></div>
+                                <p>Refused</p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-yellow-400"></div>
+                                <p>Need approved</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6">
+                <div class="">
+                    <h5 class="text-lg font-medium text-center">
+                        Profit per month
+                    </h5>
+                    <p class="text-sm font-semibold text-gray-500 text-center">July</p>
+                </div>
+                <div class="overflow-hidden">
+
+                    <canvas class="p-10" id="chartLine"></canvas>
+                  </div>
+
+            </div>
+            <div class="bg-white">
+                <div>
+                    <div>
+                        <div class="p-6">
                             <div>
-                                <ul class="flex flex-col">
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-5 h-5 rounded-full bg-blue-200"></div>
-                                        <p>Madina</p>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-5 h-5 rounded-full bg-blue-400"></div>
-                                        <p>Muhayyo</p>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-5 h-5 rounded-full bg-blue-600"></div>
-                                        <p>Nargiza</p>
-                                    </li>
-                                </ul>
+                                <h5 class="text-lg font-medium text-center">
+                                   Top 3 operators reyting
+                                </h5>
+                                <p class="text-sm font-semibold text-gray-500 text-center">July</p>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <div class="widget">
+                                    <div id="chart1" class="chart-container p-4"></div>
+                                </div>
+                                <div>
+                                    <ul class="flex flex-col">
+                                        <li class="flex items-center gap-3">
+                                            <div class="w-5 h-5 rounded-full bg-blue-200"></div>
+                                            <p>Madina</p>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <div class="w-5 h-5 rounded-full bg-blue-400"></div>
+                                            <p>Muhayyo</p>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <div class="w-5 h-5 rounded-full bg-blue-600"></div>
+                                            <p>Nargiza</p>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
+        <div>
+            <h4 class="text-xl">
+                Clients
+            </h4>
+        </div>
 
-    </div>
+        <div class="grid grid-cols-4 gap-4">
 
-    <div>
-        <h4 class="text-xl">
-            Clients
-        </h4>
-    </div>
+            <div class="col-span-3">
+                    <div>
+                        <!-- {% for lead in leads %} -->
+                            <div class="grid grid-cols-12 bg-white p-4 my-2  gap-3 items-center rounded-md" x-data="{ open: false }">
 
-    <div class="grid grid-cols-4 gap-4">
+                            <div class="col-span-1 rounded-full">
+                                <!-- <img class="rounded-full" src="{% static 'crm/images/clientIcon.jpg' %}" alt=""> -->
+                                <img class="rounded-full" src="../images/clientIcon.jpg" alt="">
+                            </div>
 
-        <div class="col-span-3">
-            <div id="lead_container_back">
-                <!--LEADS-->
-                <!-- {% for lead in leads %} -->
-                    <div class="grid grid-cols-12 bg-white p-4 my-2 gap-3 items-center rounded-md">
+                            <div class="col-span-3">
+                                <h5>
+                                    <!-- {{ lead.name }} -->
+                                    Someone
+                                </h5>
+                            </div>
 
-                    <div class="col-span-1 rounded-full">
-                        <!--<img class="rounded-full" src="{% static 'crm/images/clientIcon.jpg' %}" alt=""> BACKEND -->
-                        <img class="rounded-full" src="../images/clientIcon.jpg" alt="">
-                    </div>
-
-                    <div class="col-span-3">
-                        <h5>
-                            {{lead.name}}
-                        </h5>
-                    </div>
-
-                    <div class="col-span-2">
+                            <div class="col-span-2">
                                 <span>
                                     Date:
                                 </span>
-                        <p>
-                            {{lead.request_date}}
-                        </p>
-                    </div>
+                                <p>
+                                    <!-- {{ lead.request_date }} -->
+                                    02/08/2024
+                                </p>
+                            </div>
 
-                    <div class="col-span-2">
+                            <div class="col-span-2">
                                 <span>
                                     Product:
                                 </span>
-                        <p>
-                            {{lead.product}}
-                        </p>
-                    </div>
+                                <p>
+                                    <!-- {{ lead.product }} -->
+                                    Lactos
+                                </p>
+                            </div>
 
-                    <div class="col-span-2">
+                            <div class="col-span-2">
                                 <span>
                                     Status:
                                 </span>
-                        {% get_status lead.status as status %}
+                                <!-- {% get_status lead.status as status %}{{status|safe}} -->
+                                <p class="text-blue-400">New</p>
+                            </div>
 
-                        {{status|safe}}
+                            <div x-on:click="open = true" class="col-span-2 cursor-pointer items-center hover:text-green-500 transition-all">
+                                <p  class="inline-block">
+                                    Details
+                                </p>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </div>
+
+                            <div    x-cloak x-show="open"x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 scale-90"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-300"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-90"
+                                    class="fixed w-full h-screen top-0 left-0 z-10 bg-gray-300 opacity-90 blur-md"></div>
+
+                            <div    x-cloak x-show="open" x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 scale-90"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-100"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-90"
+                                    class="translate-center p-4 rounded-md z-20 bg-whte">
+
+                                <div>
+                                  <h5>Somebody</h5> <!-- {{ lead.name }} -->
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 mt-4 mb-2">
+                                  <input class="px-2 py-1 outline-cyan-400" type="text" value="+998997081797"> <!-- {{ lead.phone }} -->
+                                  <select class="px-2 py-1 outline-cyan-400" name="" id="">
+                                      <!-- {% get_lead_detail_status_options lead.status as status_options %}{{status_options|safe}} -->
+                                      <option class="text-green-400" value="Approved">Approved</option>
+                                      <option class="text-blue-400" value="New" selected>New</option>
+                                      <option class="text-red-400" value="Refused">Refused</option>
+                                      <option class="text-yellow-400" value="Need approved">Need approved</option>
+                                  </select>
+
+                                  <select class="px-2 py-1 outline-cyan-400">
+                                      <!-- {% get_lead_detail_products_options lead.product as product_options %}{{product_options|safe}} -->
+                                      <option value="Lactos" selected>Lactos</option>
+                                      <option value="Laditex">Laditex</option>
+                                      <option value="PerfectMan">PerfectMan</option>
+                                  </select>
+
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 my-2 text-left">
+                                  <select class="px-2 py-1 outline-cyan-400" id="location" name="whatever" id="frm-whatever">
+                                      <!-- {% get_lead_detail_addresses_options lead.address as product_address %}{{product_address|safe}} -->
+                                      <option value="Tashkent">Tashkent</option>
+                                      <option value="Andijan">Andijan</option>
+                                      <option value="Bukhara">Bukhara</option>
+                                      <option value="Jizzakh">Jizzakh</option>
+                                      <option value="Kashkadarya">Kashkadarya</option>
+                                      <option value="Navoi">Navoi</option>
+                                      <option value="Namangan">Namangan</option>
+                                      <option value="Samarkand">Samarkand</option>
+                                      <option value="Surkhandarya">Surkhandarya</option>
+                                      <option value="Syrdarya">Syrdarya</option>
+                                      <option value="Tashkent region">Tashkent region</option>
+                                      <option value="Fergana">Fergana</option>
+                                      <option value="Khorezm">Khorezm</option>
+                                      <option value="Republic of Karakalpakstan">Republic of Karakalpakstan</option>
+                                  </select>
+                                  <h4 class="px-2 py-1 ">
+                                    Lead Came date
+                                  </h4>
+                                  <h4 class="px-2 py-1 ">
+                                      <!-- {{ lead.request_date }} -->
+                                    02/08/2024
+                                  </h4>
+                                </div>
+
+                                <!-- check if status approved show this -->
+
+                                <!-- <div class="grid grid-cols-3 gap-2 my-2 text-left">
+                                    <p class="px-3 py-1 ">Sold</p>
+                                    <input class="px-2 py-1 outline-cyan-400 w-14" type="number" value="1">
+                                    <input class="px-2 py-1 outline-cyan-400" type="text" value="550 000 ">
+                                </div> -->
+
+                                <div class="grid grid-cols-3 gap-2 my-2 text-left">
+                                  <p class="px-3 py-1 ">Called</p>
+                                  <input class="px-2 py-1 outline-cyan-400 w-14" type="number" value="1">
+                                  <input class="px-2 py-1 outline-cyan-400" type="date" value="">
+                                </div>
+
+                                <div>
+                                  <textarea class="w-full my-2 px-2 py-1 outline-cyan-400" name="" id="" placeholder="A..."></textarea>
+                                </div>
+
+                                <div class="flex justify-end my-2">
+                                    <div class="flex gap-2">
+                                        <button class="border bg-cyan-500 px-4 py-1 text-white text-md
+                                                outline-none border-none hover:bg-cyan-400 transition-all
+                                                shadow-cyan">
+                                            Edit
+                                        </button>
+                                        <button  x-on:click="open = false" class="border bg-red-400 px-4 py-1 text-white text-md
+                                                outline-none border-none hover:bg-red-500 transition-all
+                                                shadow-red">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+
+                          </div>
+
+
+                        </div>
+                        <!-- {% endfor %} -->
+
                     </div>
 
-                    <div class="col-span-2 cursor-pointer items-center hover:text-green-500 transition-all">
-                        <p class="inline-block">
-                            Details
-                        </p>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </div>
+            </div>
+
+            <div class="col-span-1">
+
+                <div class="bg-white rounded-md relative mt-2">
+
+                    <div id="datepicker" class="calendar w-full"></div>
 
                 </div>
-                <!-- {% endfor %} -->
+
+                <div class="bg-white rounded-md relative my-4 pb-4">
+                        <h5 class="p-4 pb-0 text-lg">
+                            Filter:
+                        </h5>
+                        <div class="flex flex-col px-4">
+                            <p>Operator:</p>
+                            <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
+                                <option value="All">All</option>
+                                <!-- {% for operator in operators %}
+                                <option value="{{operator.username}}">{{operator.username}}</option>
+                                {% endfor %} -->
+                                <option value="Parizod">Parizod</option>
+                                <option value="Nodira">Nodira</option>
+                                <option value="Madina">Madina</option>
+                                <option value="Muhayyo">Muhayyo</option>
+                            </select>
+                            <p>Product:</p>
+                            <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
+                                <option value="All">All</option>
+                                <option value="Lactos">Lactos</option>
+                                <option value="Laditex">Laditex</option>
+                                <option value="PerfectMan">PerfectMan</option>
+                                <option value="Tribgen">Tribgen</option>
+                            </select>
+                            <p>Status:</p>
+                            <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
+                                <option value="All">All</option>
+                                <option value="Approved">Approved</option>
+                                <option value="New">New</option>
+                                <option value="Refused">Refused</option>
+                                <option value="Need_approved">Need approved</option>
+                            </select>
+                        </div>
+                </div>
+
             </div>
 
         </div>
+    </main>
 
-        <div class="col-span-1">
+    <footer>
 
-            <div class="bg-white rounded-md relative mt-2">
-
-                <div id="datepicker" class="calendar w-full"></div>
-
-            </div>
-
-            <div class="bg-white rounded-md relative my-4 pb-4">
-                <h5 class="p-4 pb-0 text-lg">
-                    Filter:
-                </h5>
-                <div class="flex flex-col px-4">
-                    <p>Operator:</p>
-                    <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
-                        <option value="All">All</option>
-                        {% for operator in operators %}
-                        <option value="{{operator.username}}">{{operator.username}}</option>
-                        {% endfor %}
-                    </select>
-                    <p>Product:</p>
-                    <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
-                        <option value="All">All</option>
-                        <option value="Lactos">Lactos</option>
-                        <option value="Laditex">Laditex</option>
-                        <option value="PerfectMan">PerfectMan</option>
-                        <option value="Tribgen">Tribgen</option>
-                    </select>
-                    <p>Status:</p>
-                    <select class="rounded-md my-1 py-1 px-2 outline-cyan-500 bg-cyan-300 text-white" name="" id="">
-                        <option value="All">All</option>
-                        <option value="Approved">Approved</option>
-                        <option value="New">New</option>
-                        <option value="Refused">Refused</option>
-                        <option value="Need approved">Need approved</option>
-                    </select>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</main>
-
-<footer>
-
-</footer>
+    </footer>
 </body>
 
 <!-- jQuery JS CDN -->
@@ -307,14 +447,14 @@
 
 
 <!-- Main javaScript CDN -->
+
+<!-- <script src="{% static 'crm/JavaScript/Main.js' %}"></script>
+<script src="{% static 'crm/JavaScript/chartOperators.js' %}"></script>
+<script src="{% static 'crm/JavaScript/diagnostics.js' %}"></script> -->
+
 <script src="../JavaScipt/Main.js"></script>
 <script src="../JavaScipt/chartOperators.js"></script>
 <script src="../JavaScipt/diagnostics.js"></script>
 
-<!--ON BACKEND-->
-<!--<script src="{% static 'crm/JavaScript/Main.js' %}"></script>-->
-<!--<script src="{% static 'crm/JavaScript/chartOperators.js' %}"></script>-->
-<!--<script src="{% static 'crm/JavaScript/diagnostics.js' %}"></script>-->
-<!--<script src="{% static 'crm/JavaScript/filters.js' %}"></script>-->
 
 </html>

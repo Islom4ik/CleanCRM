@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
+    fontFamily: {
+      'Cormorant-Upright': ['light', 'normanl','medium', 'semibold','bold'],
+    },
     extend: {
       colors: {
         'dark': '#283036',

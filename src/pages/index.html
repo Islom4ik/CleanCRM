@@ -1,42 +1,27 @@
-<!--{% load static %}-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanCRM - LOGIN</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../css/output.css">
-<!--    <link rel="stylesheet" href="{% static 'crm/css/output.css' %}">-->
-<!--    <link rel="stylesheet" href="{% static 'crm/css/input.css' %}">-->
 </head>
 <body class="bg-primary">
     <header>
         <div>
-            <!--<img src="{% static 'crm/images/logo.png' %}" alt="" class="w-24 rounded-full cursor-pointer h-24 absolute left-10 top-10 shadow_white">-->
             <img src="../images/logo.png" alt="" class="w-24 rounded-full cursor-pointer h-24 absolute left-10 top-10 shadow_white">
         </div>
     </header>
 
     <main class="w-full h-screen flex justify-center items-center">
         <div class="bg-white p-6 md:p-10 rounded-sm shadow_white">
-            <!-- {% if 'timeout' not in data %} -->
-            <form action="" method="POST" class="flex flex-col">
-                <!-- {% csrf_token %} -->
-                <!-- <label class="" for="login">Login</label> -->
-                <!-- {{form.username}} -->
-                <!-- <label class="mt-2" for="password">Password</label> -->
-                <!-- {{form.password}} -->
+            <form action="" class="flex flex-col">
                 <label class="" for="login">Login</label>
                 <input class=" border px-3 py-1" type="text" id="login" for="login">
                 <label class="mt-2" for="password">Password</label>
                 <input class=" border px-3 py-1" type="password" id="password" for="password">
-                <input type="submit" value="Log-In" class="border px-3 py-1 mt-4 cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all text-white font-semibold ">
+                <input type="submit" value="Log-In" class="border px-3 py-1 mt-4 cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all text-white font-semibold "> 
             </form>
-            <!-- {% endif %}
-
-            {% if 'error' in data %}
-                {{data.error}}
-            {% endif %} -->
         </div>
     </main>
 </body>

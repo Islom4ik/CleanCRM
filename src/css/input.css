@@ -1,8 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+[x-cloak] { display: none !important; }
 
-
+body {
+  background-color: #e7e7e7;
+  font-family: Cormorant-Upright;
+}
+h5{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
 p{
   font-size: 0.9rem;
 }
@@ -13,10 +21,12 @@ span{
 .shadow_white{
     box-shadow: 0 0 12px #000;
 }
-body {
-  background-color: #e7e7e7;
+.shadow-cyan:hover{
+  box-shadow: 0 0 20px #67E8F9;
 }
-
+.shadow-red:hover{
+  box-shadow: 0 0 20px #F87171;
+}
 /* For Calendar css */
 
 .ui-datepicker-header {
@@ -125,4 +135,96 @@ body {
   -webkit-filter: drop-shadow(0px 3px 3px rgba(245, 3, 3, 0.5));
   border-radius: 100%;
   filter: drop-shadow(0px 10px 10px rgba(30, 202, 211, 0.5));
+}
+
+.dot-red::after{
+  content: " ";
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  background-color: red;
+  top:5px;
+  right: 1px;
+  display: block;
+  position: absolute;
+}
+.translate-center{
+    background-color: #fff;
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.sidebar_menu{
+  animation-name: sidebar;
+  animation-duration: 1s;
+}
+@keyframes sidebar {
+  0%   {width:  3.5rem;}
+  100% {width:  9rem;}
+}
+
+/* hamburger munu */
+
+.menu-icon {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+.menu-icon:before {
+  content: '';
+  position: absolute;
+  background: rgb(255, 255, 255, 0.1);
+  width: 60px;
+  height: 60px;
+  top: -10px;
+  left: -10px;
+  opacity: 1;
+  border-radius: 5px;
+  transition: opacity 0.2s ease;
+}
+.menu-icon .bar {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #088CAC;
+  border-radius: 2px;
+  left: 0;
+  transform-origin: 50% 50%;
+  top: 50%;
+  transform: tralnslateY(-50%); 
+  transition: top 300ms ease-in, transform 300ms ease-in 300ms, opacity 0ms 300ms;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #088CAC;
+  border-radius: 2px;
+  left: 0;
+  transform-origin: 0% 50%;
+  transition: top 300ms ease-in, transform 300ms ease-in 300ms, opacity 0ms 300ms;
+}
+.bar:before {
+  top: -10px;
+}
+.bar:after {
+  top: 10px;
+}
+.menu-open .bar:before,
+.menu-open .bar:after {
+  top: 0;
+  width: 50%;
+}
+.menu-open .bar:before {
+  transform: rotate3d(0, 0, 1, 45deg);
+}
+
+.menu-open .bar:after {
+    transform: rotate3d(0, 0, 1, -45deg);
 }
