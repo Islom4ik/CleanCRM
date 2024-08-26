@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load operators_tags %}
+
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block main %}
+<main class="p-20">
+        <div class="grid grid-cols-3 gap-4 p-6 ">
+            <div class="bg-white p-4 border-gray-200 rounded-md border shadow-white" {% if account_data.role == 'Operator' %}style="height: 193px;"{% endif %}>
+                <div class="uppercase border-b border-gray-200 ">
+                    <h3 class="mb-2 text-xl">Activities Leaderboard</h3>
+                </div>
+                <div class="grid grid-cols-6 mt-4 mb-2">
+                    <div class="col-span-1">
+                        <img class="w-14 h-14 rounded-full" src="{{operator.operator.avatar.url}}" alt="Operator">
+                    </div>
+                    <div class="col-span-5">
+                        <h5>
+                            {{operator.operator.owner.first_name}} {{operator.operator.owner.last_name}}
+                        </h5>
+                        <p>{{operator.operator.get_email}}</p>
+                    </div>
+                </div>
+                <div class="mb-4 border-b border-gray-200">
+                    <div class="w-7/12 flex">
+                        {% get_lead_activities_percentage operator.datas.lead_activities as operator_lead_activities_percentage %}
+                        <div style="width: {{operator_lead_activities_percentage.Refused}}%;" class="bg-red-400 h-1 rounded-tl-full rounded-bl-full"></div>
+                        <div style="width: {{operator_lead_activities_percentage.Approved}}%;" class="bg-green-400 h-1"></div>
+                        <div style="width: {{operator_lead_activities_percentage.Need_approved}}%;" class="bg-yellow-400 h-1"></div>
+                        <div style="width: {{operator_lead_activities_percentage.New}}%;" class="bg-blue-400 h-1 rounded-tr-full rounded-br-full"></div>
+                    </div>
+                    <div class="flex gap-2 my-4">
+                        <div class="flex gap-1">
+                            <p class="text-red-400">{{operator.datas.lead_activities.Refused}}</p>
+                            <p>Refused</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <p class="text-green-400">{{operator.datas.lead_activities.Approved}}</p>
+                            <p>Approved</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <p class="text-yellow-400">{{operator.datas.lead_activities.Need_approved}}</p>
+                            <p>Need approved</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <p class="text-blue-400">{{operator.datas.lead_activities.New}}</p>
+                            <p>New</p>
+                        </div>
+                    </div>
+                </div>
+                {% if account_data.role != 'Operator' %}
+                <div class="mt-8">
+                    {% for i in operators %}
+                    <div class="grid grid-cols-3 items-center my-2">
+                        <a class="flex items-center gap-2 col-span-1 " href="{% url 'operator' i.operator.pk %}">
+                            <img class="w-8 h-8 rounded-full hover:border border-green-400 transition-all" src="{{i.operator.avatar.url}}" alt="">
+                            <p class="hover:text-green-400 transition-colors">{{i.operator.owner.first_name}} {{i.operator.owner.last_name}}</p>
+                        </a>
+                        {% get_lead_activities_percentage i.datas.lead_activities as lead_activities_percentage %}
+                        <div class="flex w-10/12 col-span-2">
+                            <div style="width: {{lead_activities_percentage.Refused}}%;" class="bg-red-400 h-1 rounded-tl-full rounded-bl-full"></div>
+                            <div style="width: {{lead_activities_percentage.Approved}}%;" class="bg-green-400 h-1"></div>
+                            <div style="width: {{lead_activities_percentage.Need_approved}}%;" class="bg-yellow-400 h-1"></div>
+                            <div style="width: {{lead_activities_percentage.New}}%;" class="bg-blue-400 h-1 rounded-tr-full rounded-br-full"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div >
+                <div class="bg-white p-4 border-gray-200 rounded-md border shadow-white">
+                    {% calculate_operator_attendance operator.datas.attendance as attendance %}
+                    <div class="uppercase border-b border-gray-200 ">
+                        <h3 class="mb-2 text-xl">activities</h3>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="text-lg">
+                            Weekly
+                        </h5>
+                        <div class=" grid grid-cols-7 items-center gap-4">
+                            <div class="w-full h-2 bg-cyan-100 col-span-5 relative rounded-lg">
+                                <div class=" bg-cyan-400 h-full animation_charge1 rounded-lg" style="width: {{attendance.weekly}}% !important;"></div>
+                                
+                            </div>
+                            <div class="col-span-2 flex items-center">
+                                <p>{{operator.datas.attendance.weekly}}</p>
+                                <p>/</p>
+                                <p>6</p> 
+                                <p class="ml-2"> days in work</p>
+                            </div>
+                        </div>
+                        <h5 class="text-lg mt-4">
+                            Monthly
+                        </h5>
+                        <div class="grid grid-cols-7 items-center gap-4">
+                            <div class="w-full h-2 bg-cyan-100 col-span-5 relative rounded-lg">
+                                <div class="bg-cyan-400 h-full animation_charge2 rounded-lg" style="width: {{attendance.monthly}}% !important;"></div>
+                                
+                            </div>
+                            <div class="col-span-2 flex items-center">
+                                <p>{{operator.datas.attendance.monthly}}</p>
+                                <p>/</p>
+                                <p>30</p> 
+                                <p class="ml-2"> days in work</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 border-gray-200 rounded-md border shadow-white mt-4">
+                    <div class="flex items-center gap-4">
+                        {% unix_to_time_format operator.datas.attendance.started_working as start_time %}
+                        {% unix_to_time_format operator.datas.attendance.end_working as stop_time %}
+                        <div>
+                            <h5 class="text-lg">
+                                Start:
+                            </5>
+                        </div>
+                        <div class="watch">
+                            <a href="javascript:hourS()" id="hour" value="{{start_time.hours}}">{{start_time.hours}}</a>
+                            <a id="bigdots" href="#">:</a>
+                            <a href="javascript:minS()" id="min">{{start_time.minutes}}</a>
+                            <a id="bigdots" href="#">:</a>
+                            <a href="javascript:secS()" id="sec">{{start_time.seconds}}</a>
+                        </div>
+                        <div>
+                            <h5 class="text-lg">
+                                End:
+                            </5>
+                        </div>
+                        <div class="watch">
+                            <a href="javascript:hourS()" id="hour"  value="{{stop_time.hours}}">{{stop_time.hours}}</a>
+                            <a id="bigdots" href="#">:</a>
+                            <a href="javascript:minS()" id="min">{{stop_time.minutes}}</a>
+                            <a id="bigdots" href="#">:</a>
+                            <a href="javascript:secS()" id="sec">{{stop_time.seconds}}</a>
+                        </div>
+                    </div>
+
+                    
+                    
+                </div>
+            </div>
+            <div >
+
+                <div class="bg-white p-4 border-gray-200 rounded-md border shadow-white">
+                    {% calculate_revenue operator.operator.pk as revenue %}
+                    <div class="uppercase border-b border-gray-200 ">
+                        <h3 class="mb-2 text-xl">Deals Revenue</h3>
+                    </div>
+                    <div class="grid grid-cols-2 mt-4">
+    
+                        <div>
+                            <h5>
+                                {{revenue.need_approved}} sum
+                            </h5>
+                            <p class="text-yellow-400">Waiting approved</p>
+                        </div>
+    
+                        <div>
+                            <h5>
+                                {{revenue.approved}} sum
+                            </h5>
+                            <p class="text-green-400">Approved</p>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="mt-4 bg-white p-4 border-gray-200 rounded-md border shadow-white">
+                    {% calculate_regwards operator.operator.pk as regwards %}
+                    <div class="border-b border-gray-200">
+                        <h5 class="text-lg">Weekly Regwards</h5>
+                    </div>
+
+                    <div class="mt-4">
+                        <p>15,000,000 sum approved for 4,000,000</p>
+                    </div>
+                    <div class="grid grid-cols-7 items-center gap-4" >
+                        <div class="w-full h-2 bg-cyan-100 col-span-5 relative rounded-lg">
+                            <div class="absolute top-0 left-1/4 border border-cyan-500 h-full"></div>
+                            <div class="absolute top-0 left-2/4 border border-cyan-500 h-full"></div>
+                            <div class="absolute top-0 left-3/4 border border-cyan-500 h-full"></div>
+                            <div class=" bg-cyan-400 h-full animation_charge rounded-lg" style="width: {{regwards.percentage}}% !important;"></div>
+                        </div>
+                        <div class="col-span-2">
+                                <div class="w-24 h-8 text-center py-1 border border-cyan-400 rounded-md button
+                                        bg-cyan-100 cursor-pointer shadow-cyan hover:bg-cyan-400 transition-all hover:text-white">
+                                    <p class="text-center hover_claim_bonus">
+                                        {{regwards.claim_price}}
+                                    </p>
+                                    <p class="text-center hidden hover_claim">
+                                        Claim
+                                    </p>
+                                </div>
+                        </div>
+                    </div>           
+                </div>
+
+                <div class="flex items-center gap-4 mt-4 bg-white p-4 border-gray-200 rounded-md border shadow-white">
+                    <article class="group duration-[.6s] [transform-style: preserve-3d]" style="transition: 0.6s;transform-style: preserve-3d;">
+    
+                        <figure class="relative w-96 h-60 rounded-2xl font-mono text-white overflow-hidden cursor-pointer group:hover:rotate-y-[180deg] transition-all duration-500">
+                          <!-- Front content -->
+                          <section
+                            class="absolute top-0 left-0 w-full h-full flex flex-col justify-center gap-6 p-6 bg-gradient-to-tr from-gray-900 to-gray-700 transition-all duration-100 delay-200 z-20" style="transform: rotateY(0deg);">
+                    
+                            <div class="flex justify-between items-center">
+                              <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt='Smart card' class="w-12">
+                    
+                              <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="Visa image" class="w-12">
+                            </div>
+                    
+                            <!-- CardNumber -->
+                            <div class="">
+                              <label for="" class="hidden">Card Number</label>
+                              <input type="text" id="" value="{{operator.datas.personal_card.card_number}}" readonly
+                                     class="outline-none w-full bg-transparent text-center text-2xl">
+                            </div>
+                    
+                            <div class="w-full flex flex-row justify-between">
+                    
+                              <div class="w-full flex flex-col">
+                                <label for="">Card holder</label>
+                                <input type="text" id="" value="{{operator.datas.personal_card.holder_name}}" readonly
+                                       class="outline-none bg-transparent">
+                              </div>
+                    
+                              <div class="w-1/4 flex flex-col">
+                                <label for="">Expires</label>
+                                <input type="text" id="" value="{{operator.datas.personal_card.valid_thru}}" readonly class="outline-none bg-transparent">
+                              </div>
+                    
+                            </div>
+                          </section>
+                          
+                          <!-- Back Content -->
+                          <section></section>
+                        </figure>
+                    
+                        <!-- Front content -->
+                        <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center gap-6 p-6 bg-gradient-to-tr from-gray-900 to-gray-700 transition-all duration-100 delay-200 z-20" style="transform: rotateY(0deg);">
+                    
+                          <div class="flex justify-between items-center">
+                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt='Smart card' class="w-12">
+                    
+                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="Visa image" class="w-12">
+                          </div>
+                    
+                          <!-- CardNumber -->
+                          <div class="">
+                            <label for="" class="hidden">Card Number</label>
+                            <input type="text" id="" value="{{operator.datas.personal_card.card_number}}" readonly
+                                   class="outline-none w-full bg-transparent text-center text-2xl">
+                          </div>
+                    
+                          <div class="w-full flex flex-row justify-between">
+                    
+                            <div class="w-full flex flex-col">
+                              <label for="">Card holder</label>
+                              <input type="text" id="" value="{{operator.datas.personal_card.holder_name}}" readonly
+                                     class="outline-none bg-transparent">
+                            </div>
+                    
+                            <div class="w-1/4 flex flex-col">
+                              <label for="">Expires</label>
+                              <input type="text" id="" value="{{operator.datas.personal_card.valid_thru}}" readonly class="outline-none bg-transparent">
+                            </div>
+                    
+                          </div>
+                    
+                        </div>
+                    
+                        <!-- Back content -->
+                        <div class="absolute top-0 left-0 w-full h-full flex flex-col gap-3 justify-center bg-gradient-to-tr from-gray-900 to-gray-700 transition-all z-10"
+                             style="transform: rotateY(180deg);">
+                    
+                          <!-- Band -->
+                          <div class="w-full h-12 bg-black"></div>
+                    
+                          <div class="px-6 flex flex-col gap-6 justify-center">
+                            <div class="flex flex-col items-end">
+                              <label for="">CVV</label>
+                              <input type="text" id="" value="123" readonly
+                                     class="outline-none rounded text-black w-full h-8 text-right"
+                                     style="background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);">
+                            </div>
+                    
+                    
+                            <div class="flex justify-start items-center">
+                              <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png"
+                                   alt="" class="w-12">
+                            </div>
+                    
+                          </div>
+                    
+                        </div>
+                      </article>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock main %}

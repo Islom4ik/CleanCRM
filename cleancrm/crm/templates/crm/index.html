@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanCRM - LOGIN</title>
+    <link rel="icon" href="{% static 'crm/images/icon.svg' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/input.css' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/style.css' %}">
+</head>
+<body class="bg-primary">
+    <header>
+        <a href="https://cleanpharm.uz" target="_blank">
+            <img src="{% static 'crm/images/logo.png' %}" alt="" class="w-24 rounded-full cursor-pointer h-24 absolute left-10 top-10 shadow_white">
+        </a>
+    </header>
+
+    <main class="w-full h-screen flex justify-center items-center">
+        <div class="bg-white p-6 md:p-10 rounded-sm shadow_white">
+            {% if 'timeout' not in request.session %}
+            <form action="" method="POST" class="flex flex-col">
+                {% csrf_token %}
+                <label class="" for="login">Login</label>
+                {{form.username}}
+                <label class="mt-2" for="password">Password</label>
+                {{form.password}}
+                <input type="submit" value="Log-In" class="border px-3 py-1 mt-4 cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all text-white font-semibold ">
+            </form>
+            {% else %}
+            <h1 class="text-red-400" style="font-size: 20px; font-weight: bold;">You have spent all your chances, come back in 2 minutes</h1>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <h1 class="text-red-400" style="font-size: 20px;">{{message}}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

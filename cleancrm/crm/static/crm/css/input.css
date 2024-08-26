@@ -1,0 +1,292 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+[x-cloak] { display: none !important; }
+
+body {
+  background-color: #e7e7e7;
+  font-family: Cormorant-Upright;
+}
+h5{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+p{
+  font-size: 0.9rem;
+}
+span{
+  font-size: 0.75rem;
+}
+
+.shadow_white{
+    box-shadow: 0 0 12px #000;
+}
+.shadow-cyan:hover{
+  box-shadow: 0 0 20px #67E8F9;
+}
+.shadow-red:hover{
+  box-shadow: 0 0 20px #F87171;
+}
+.shadow-green:hover{
+  box-shadow: 0 0 20px #4ADE80;
+}
+/* For Calendar css */
+
+.ui-datepicker-header {
+  height: 50px;
+  line-height: 50px;
+  color: #b0aead;
+  background: #e9e5e3;
+  margin-bottom: 10px;
+}
+.ui-datepicker-month , .ui-datepicker-year{
+  font-size: 16px;
+}
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  width: 20px;
+  height: 20px;
+  text-indent: 9999px;
+  border: 2px solid #b0aead;
+  border-radius: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.ui-datepicker-prev {
+  float: left;
+  margin-left: 12px;
+}
+.ui-datepicker-prev:after {
+  transform: rotate(45deg);
+  margin: -43px 0px 0px 8px;
+}
+.ui-datepicker-next {
+  float: right;
+  margin-right: 12px;
+}
+.ui-datepicker-next:after {
+  transform: rotate(-135deg);
+  margin: -43px 0px 0px 6px;
+}
+.ui-datepicker-prev:after,
+.ui-datepicker-next:after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-left: 2px solid #b0aead;
+  border-bottom: 2px solid #b0aead;
+}
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover,
+.ui-datepicker-prev:hover:after,
+.ui-datepicker-next:hover:after {
+  border-color: #5ed1cc;
+}
+.ui-datepicker-title {
+  text-align: center;
+  background-color: white;
+}
+.ui-datepicker-calendar {
+  width: 100%;
+  text-align: center;
+}
+.ui-datepicker-calendar thead tr th span {
+  display: block;
+  color: #00a8b2;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+.ui-state-default {
+  display: block;
+  text-decoration: none;
+  color: #b5b5b5;
+  line-height: 30px;
+  font-size: 14px;
+}
+.ui-state-default:hover {
+  background: rgba(0,0,0,0.02);
+}
+/* .ui-state-highlight {
+  color: #8dd391;
+} */
+.ui-state-active {
+  color: #06f8ec;
+}
+.ui-datepicker-unselectable .ui-state-default {
+  color: #eee;
+  border: 2px solid transparent;
+}
+
+/* End calendar css */
+
+
+.widget {
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: none;
+}
+
+.chart-container {
+  position: relative !important;
+  filter: blur(0px);
+
+}
+
+.shadow {
+  -webkit-filter: drop-shadow(0px 3px 3px rgba(245, 3, 3, 0.5));
+  border-radius: 100%;
+  filter: drop-shadow(0px 10px 10px rgba(30, 202, 211, 0.5));
+}
+
+.dot-red::after{
+  content: " ";
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  background-color: red;
+  top:5px;
+  right: 1px;
+  display: block;
+  position: absolute;
+}
+.translate-center{
+    background-color: #fff;
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.sidebar_menu{
+  animation-name: sidebar;
+  animation-duration: 1s;
+}
+@keyframes sidebar {
+  0%   {width:  3.5rem;}
+  100% {width:  9rem;}
+}
+
+/* hamburger munu */
+
+.menu-icon {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+.menu-icon:before {
+  content: '';
+  position: absolute;
+  background: rgb(255, 255, 255, 0.1);
+  width: 60px;
+  height: 60px;
+  top: -10px;
+  left: -10px;
+  opacity: 1;
+  border-radius: 5px;
+  transition: opacity 0.2s ease;
+}
+.menu-icon .bar {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #088CAC;
+  border-radius: 2px;
+  left: 0;
+  transform-origin: 50% 50%;
+  top: 50%;
+  transform: tralnslateY(-50%); 
+  transition: top 300ms ease-in, transform 300ms ease-in 300ms, opacity 0ms 300ms;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #088CAC;
+  border-radius: 2px;
+  left: 0;
+  transform-origin: 0% 50%;
+  transition: top 300ms ease-in, transform 300ms ease-in 300ms, opacity 0ms 300ms;
+}
+.bar:before {
+  top: -10px;
+}
+.bar:after {
+  top: 10px;
+}
+.menu-open .bar:before,
+.menu-open .bar:after {
+  top: 0;
+  width: 50%;
+}
+.menu-open .bar:before {
+  transform: rotate3d(0, 0, 1, 45deg);
+}
+
+.menu-open .bar:after {
+    transform: rotate3d(0, 0, 1, -45deg);
+}
+
+/* hover effects */
+
+.button:hover .hover_claim{
+  display: block;
+}
+.button:hover .hover_claim_bonus{
+  display: none;
+}
+
+ /* animation claim bar */
+
+ .animation_charge{
+  width: 45%;
+  animation-duration: 2s;
+  animation-name: charge;
+ }
+ @keyframes charge {
+  0%   {width:  0%;}
+  100% {width:  45%;}
+}
+
+.animation_charge1{
+  width: 80%;
+  animation-duration: 2s;
+  animation-name: charge1;
+ }
+ @keyframes charge1 {
+  0%   {width:  0%;}
+  100% {width:  80%;}
+}
+
+.animation_charge2{
+  width: 70%;
+  animation-duration: 2s;
+  animation-name: charge2;
+ }
+ @keyframes charge2 {
+  0%   {width:  0%;}
+  100% {width:  70%;}
+}
+
+/* Cloack */
+.watch{
+  width: 140px;
+  height: 30px;
+  background: linear-gradient(to right, #60A5FA,  #22D3EE);
+  color: red;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 10px -2px rgba(0,0,0,.35);
+  
+}
+.watch a{
+  color: white;
+  text-decoration: none;
+}

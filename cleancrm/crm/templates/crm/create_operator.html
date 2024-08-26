@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'crm/css/operator_create.css' %}">
+</head>
+<body>
+
+
+<div class="form_body">
+    <a href="{% url 'crm' %}"><img src="{% static 'crm/images/logo.png' %}" alt="" class="logo"></a>
+    <h1 class="title">CREATE OPERATOR</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{form.username}}</p>
+        <p>{{form.first_name}}</p>
+        <p>{{form.last_name}}</p>
+        <p>{{form.phone}}</p>
+        <p>{{form.email}}</p>
+        <p>{{form.gender}}</p>
+        <p>{{form.password1}}</p>
+        <p>{{form.password2}}</p>
+        <label for="avatar" class="chose_avatar_lable">CHOSE AVATAR OR LEAVE DEFAULT</label>
+        <p>{{form.avatar}}</p>
+        <button type="submit" class="form-control submit_button">Create</button>
+    </form>
+
+    <div class="messages">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message message-{{message.tags}}">{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

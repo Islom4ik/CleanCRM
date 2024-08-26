@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'crm/images/icon.svg' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/crm.css' %}">
+    <script src="https://kit.fontawesome.com/f0336577ea.js" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock title %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</head>
+
+<div class="background-loader">
+    <img src="{% static 'crm/images/icon.svg' %}" class="logo-blbg" alt="">
+</div>
+
+<body>
+    <header x-data="{ isOpen: true }" @click.outside="isOpen = true">
+
+        <div class="fixed flex items-center w-full bg-white shadow_header z-50 p-3 shadow-lg top-0 left-0">
+            <div x-on:click="isOpen = ! isOpen" class="px-2 py-1 ">
+                <div :class="{'menu-open' : !isOpen}" class="menu-icon">
+                    <span class="bar"></span>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div class="flex justify-between items-center px-2 py-1 w-full">
+
+                <ul class="flex gap-4 px-4">
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        <a href="{% url 'crm' %}">Home</a>
+                    </li>
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        <a href="{% url 'operators' %}">Operators</a>
+                    </li>
+                    
+                    {% if request.user.is_superuser %}
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        <a href="{% url 'create_operator' %}">Create Operator</a>
+                    </li>
+                    {% endif %}
+
+                    <!-- 
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        Privacy Policy
+                    </li>
+                    <li class="text-gray-500 transition-all font-medium hover:text-black cursor-pointer">
+                        Tearms and coinditions
+                    </li> -->
+
+                </ul>
+
+                <div class="flex items-center gap-2">
+
+                    <div>
+                        <a href="{% url 'logout' %}" class="text-gray-500 transition-all font-medium hover:text-black">
+                            {{ request.user.username }}
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <i class="fa-regular fa-bell dot-red"></i>
+                    </div>
+                    <div>
+                        <img class="w-8 h-8 border rounded-full" src="{{ account_data.avatar.url }}" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div    :class="isOpen ? '' : 'w-36 sidebar_menu'"
+                class="flex flex-col bg-cyan-600 text-white fixed h-screen py-4
+                        px-2 pt-20 left-0 top-0 w-14 overflow-hidden shadow-cyan">
+
+            <div class="flex items-center">
+                <a :class="isOpen ? '' : 'w-full'" href="{% url 'crm' %}" class="flex gap-2 items-center p-2 hover:bg-cyan-700 focus:bg-cyan-800 w-10 h-10">
+                    <i class="fa-solid fa-list text-2xl font-thin"></i>
+                    <h5 :class="{ 'hidden': isOpen }">Dashboard</h5>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a :class="isOpen ? '' : 'w-full'" href="{% url 'operators' %}" class=" flex gap-2 items-center p-2  hover:bg-cyan-700 focus:bg-cyan-800 w-10 h-10">
+                    <i class="fa-solid fa-headset text-2xl font-thin"></i>
+                    <h5 :class="{ 'hidden': isOpen }">Operators</h5>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    {% block main %}
+    {% endblock main %}
+
+    {% block js %}
+    {% endblock js %}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="{% static 'crm/JavaScript/Main.js' %}"></script>
+    <script src="{% static 'crm/JavaScript/chartOperators.js' %}"></script>
+    <script src="{% static 'crm/JavaScript/diagnostics.js' %}"></script>
+    <script src="{% static 'crm/JavaScript/filters.js' %}"></script>
+</body>
+</html>

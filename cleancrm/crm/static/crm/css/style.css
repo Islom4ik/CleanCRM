@@ -1,0 +1,12 @@
+
+
+body{
+    background: url('/static/crm/images/background.jpg') no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    transition: 0.5s;
+}
+
+body:hover {
+    backdrop-filter: blur(4px);
+}
